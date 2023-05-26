@@ -1,46 +1,45 @@
-import { useState,useEffect } from 'react'
-import axios from 'axios'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import axios from "axios";
+import reactLogo from "./assets/react.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const [error, setError] = useState(null);
-  const [auth,setToken] = useState([])
+  const [auth, setToken] = useState([]);
 
-  function getToken(){
-    let headersList = {
-      "Accept": "*/*",
-      "Content-Type": "application/json" 
-     }
-     
-     let bodyContent = JSON.stringify({
-      "inepCod": "26127792",
-      "password": "26127792"
-     });
-     
-     let reqOptions = {
-       url: "https://tan-giant-seagull.cyclic.app/auth/login",
-       method: "POST",
-       headers: headersList,
-       data: bodyContent,
-     }
-  
-    useEffect(() =>{
-      axios.request(reqOptions)      
+  let headersList = {
+    Accept: "*/*",
+    "Content-Type": "application/json",
+  };
+
+  let bodyContent = JSON.stringify({
+    inepCod: "26127792",
+    password: "26127792",
+  });
+
+  let reqOptions = {
+    url: "https://tan-giant-seagull.cyclic.app/auth/login",
+    method: "POST",
+    headers: headersList,
+    data: bodyContent,
+  };
+
+  useEffect(() => {
+    axios
+      .request(reqOptions)
       .then((response) => {
-        console.log(response)
+        console.log(response);
         setToken(response.data);
         setError(null);
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
-  
-    })
-  }
+  });
 
+  console.log(auth);
   return (
     <div className="App">
       <div>
@@ -53,7 +52,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={getToken}>
+        <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
@@ -64,7 +63,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
