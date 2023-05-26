@@ -1,10 +1,40 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import axios from 'axios'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const [error, setError] = useState(null);
+  const [auth,setToken] = useState([])
+
+  let headersList = {
+    "Accept": "*/*",
+    "Content-Type": "application/json" 
+   }
+   
+   let bodyContent = JSON.stringify({
+    "inepCod": "26127792",
+    "password": "26127792"
+   });
+   
+   let reqOptions = {
+     url: "https://tan-giant-seagull.cyclic.app/auth/login",
+     method: "POST",
+     headers: headersList,
+     data: bodyContent,
+   }
+
+  useEffect(() =>{
+    axios.request(reqOptions)      
+    .then((response) => {
+      setToken(response.data);
+      setError(null);
+    })
+    .catch(setError);
+
+  })
   return (
     <div className="App">
       <div>
@@ -18,7 +48,7 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+          count is {auth}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
