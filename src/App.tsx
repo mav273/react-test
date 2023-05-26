@@ -34,7 +34,9 @@ function App() {
         setToken(response.data);
         setError(null);
       })
-      .catch(setError);
+      .catch((e) => {
+        console.log(e)
+      });
   
     })
   }
