@@ -47,7 +47,11 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => console.log(auth)}>
+        <button onClick={() => {
+          if (error) console.log(error)
+          else {console.log(auth)}}
+        }>
+      
           count is {count}
         </button>
         <p>
