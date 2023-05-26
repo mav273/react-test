@@ -9,32 +9,36 @@ function App() {
   const [error, setError] = useState(null);
   const [auth,setToken] = useState([])
 
-  let headersList = {
-    "Accept": "*/*",
-    "Content-Type": "application/json" 
-   }
-   
-   let bodyContent = JSON.stringify({
-    "inepCod": "26127792",
-    "password": "26127792"
-   });
-   
-   let reqOptions = {
-     url: "https://tan-giant-seagull.cyclic.app/auth/login",
-     method: "POST",
-     headers: headersList,
-     data: bodyContent,
-   }
-
-  useEffect(() =>{
-    axios.request(reqOptions)      
-    .then((response) => {
-      setToken(response.data);
-      setError(null);
+  function getToken(){
+    let headersList = {
+      "Accept": "*/*",
+      "Content-Type": "application/json" 
+     }
+     
+     let bodyContent = JSON.stringify({
+      "inepCod": "26127792",
+      "password": "26127792"
+     });
+     
+     let reqOptions = {
+       url: "https://tan-giant-seagull.cyclic.app/auth/login",
+       method: "POST",
+       headers: headersList,
+       data: bodyContent,
+     }
+  
+    useEffect(() =>{
+      axios.request(reqOptions)      
+      .then((response) => {
+        console.log(response)
+        setToken(response.data);
+        setError(null);
+      })
+      .catch(setError);
+  
     })
-    .catch(setError);
+  }
 
-  })
   return (
     <div className="App">
       <div>
@@ -47,11 +51,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => {
-          if (error) console.log(error)
-          else {console.log(auth)}}
-        }>
-      
+        <button onClick={getToken}>
           count is {count}
         </button>
         <p>
