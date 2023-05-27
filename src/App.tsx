@@ -6,8 +6,7 @@ import "./App.css";
 function App() {
   const [count, setCount] = useState(0);
 
-  const [error, setError] = useState(null);
-  const [auth, setToken] = useState([]);
+  const [auth, setToken] =useState<string>('');
 
   let headersList = {
     Accept: "*/*",
@@ -20,26 +19,24 @@ function App() {
   });
 
   let reqOptions = {
-    url: "https://tan-giant-seagull.cyclic.app/auth/login",
+    url: "https://motionless-red-donkey.cyclic.app/auth/login",
     method: "POST",
     headers: headersList,
     data: bodyContent,
   };
 
-  useEffect(() => {
-    axios
-      .request(reqOptions)
-      .then((response) => {
-        console.log(response);
-        setToken(response.data);
-        setError(null);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
+  const fetchToken = async () => {
+    try {
+      const response = await axios.request(reqOptions); // Replace with your API endpoint
+      console.log(response)
+      setToken(response.data.access_token);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-  console.log(auth);
+
+
   return (
     <div className="App">
       <div>
@@ -58,6 +55,10 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
+      </div>
+      <div>
+      <button onClick={fetchToken}>Fetch Data</button>
+        <div>{auth}</div>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
